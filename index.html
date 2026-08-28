@@ -86,6 +86,7 @@
       copied: 'コピーしました!',
       errRange: '最大値は最小値より大きくしてください',
       errCount: '重複なしの場合、個数は範囲内の数字数以下にしてください',
+      errMaxCount: '一度に抽選できるのは5000個までです',
       shareText: nums => `抽選結果: ${nums.join(', ')}`,
       footerLinks: '他のツールも作っています → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">サイコロ</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">公平くじ引き</a>'
     },
@@ -99,6 +100,7 @@
       copied: 'Copied!',
       errRange: 'Max must be greater than min',
       errCount: 'With no duplicates, count must be within the range size',
+      errMaxCount: 'You can draw at most 5000 numbers at once',
       shareText: nums => `Draw result: ${nums.join(', ')}`,
       footerLinks: 'Also made these → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">Dice Roller</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">Fair Picker</a>'
     }
@@ -146,6 +148,7 @@
     if (isNaN(min) || isNaN(max) || max <= min) { alert(t().errRange); return; }
     if (unique && count > (max - min + 1)) { alert(t().errCount); return; }
     if (!count || count < 1) return;
+    if (count > 5000) { alert(t().errMaxCount); return; }
 
     const numbers = unique ? drawUnique(min, max, count) : drawWithDuplicates(min, max, count);
     lastNumbers = numbers;
