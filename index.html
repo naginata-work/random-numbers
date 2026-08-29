@@ -71,7 +71,25 @@
     <button class="copy-btn" id="copyBtn" style="display:none;"></button>
   </div>
 
+  <div class="card" style="font-size:13px; line-height:1.9; color:var(--sub);">
+    <h2 id="aboutTitle" style="font-size:15px; color:var(--text); margin:0 0 8px;"></h2>
+    <p id="aboutBody1" style="margin:0 0 10px;"></p>
+    <p id="aboutBody2" style="margin:0;"></p>
+  </div>
+
+  <div class="card" style="font-size:13px; line-height:1.9; color:var(--sub);">
+    <h2 id="faqTitle" style="font-size:15px; color:var(--text); margin:0 0 10px;"></h2>
+    <p id="faq1Q" style="margin:0 0 4px; color:var(--text); font-weight:bold;"></p>
+    <p id="faq1A" style="margin:0 0 12px;"></p>
+    <p id="faq2Q" style="margin:0 0 4px; color:var(--text); font-weight:bold;"></p>
+    <p id="faq2A" style="margin:0;"></p>
+  </div>
+
   <p class="footer-links" id="footerLinks"></p>
+  <p style="text-align:center; font-size:11px; color:var(--sub); margin-top:4px;">
+    <a href="https://naginata-work.github.io/" style="color:var(--sub);" id="allToolsLink"></a> ・
+    <a href="https://naginata-work.github.io/privacy.html" style="color:var(--sub);" id="privacyLink"></a>
+  </p>
 </div>
 
 <script>
@@ -88,7 +106,15 @@
       errCount: '重複なしの場合、個数は範囲内の数字数以下にしてください',
       errMaxCount: '一度に抽選できるのは5000個までです',
       shareText: nums => `抽選結果: ${nums.join(', ')}`,
-      footerLinks: '他のツールも作っています → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">サイコロ</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">公平くじ引き</a>'
+      footerLinks: '他のツールも作っています → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">サイコロ</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">公平くじ引き</a>',
+      aboutTitle: '「重複なし」の仕組みについて',
+      aboutBody1: '宝くじの番号を決めるとき、抽選会でクジ番号を割り振るときなど、「範囲内から複数の数字を、被りなく選びたい」という場面は意外とあります。単純にランダムな数字を必要な個数分繰り返し生成すると、同じ数字が混ざってしまうことがあります。',
+      aboutBody2: 'このツールは範囲と個数を指定すると、「重複なし」にチェックが入っている場合、被りが起きないアルゴリズムで抽選します。範囲が非常に広い場合(20万通りを超える場合)は、集合(Set)を使って重複を検知しながら抽選する方式に自動的に切り替わります。',
+      faqTitle: 'よくある質問',
+      faq1Q: '重複ありにするのはどんな時?',
+      faq1A: 'サイコロを繰り返し振るような、同じ数字が出ても構わないシミュレーションをしたい場合に使います。チェックを外すと、毎回独立してランダムな数字を生成します。',
+      faq2Q: '一度に抽選できる個数に上限はある?',
+      faq2A: 'はい、極端に大きな数値を指定して動作が重くなるのを防ぐため、1回あたり最大5000個までとしています。',
     },
     en: {
       title: '🎱 Random Number Picker',
@@ -102,7 +128,15 @@
       errCount: 'With no duplicates, count must be within the range size',
       errMaxCount: 'You can draw at most 5000 numbers at once',
       shareText: nums => `Draw result: ${nums.join(', ')}`,
-      footerLinks: 'Also made these → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">Dice Roller</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">Fair Picker</a>'
+      footerLinks: 'Also made these → <a href="https://naginata-work.github.io/dice-roller/" target="_blank" rel="noopener">Dice Roller</a> / <a href="https://naginata-work.github.io/fair-picker/" target="_blank" rel="noopener">Fair Picker</a>',
+      aboutTitle: 'How "no duplicates" works',
+      aboutBody1: "Picking lottery numbers or assigning raffle numbers both need several unique numbers drawn from a range at once. Just generating random numbers one at a time in a loop can easily produce duplicates by chance.",
+      aboutBody2: 'Set your range and how many numbers you need, and with "No duplicates" checked, a proper shuffling algorithm guarantees a duplicate-free draw. For very large ranges (over 200,000 possible values), it automatically switches to a set-based approach that checks for duplicates as it goes.',
+      faqTitle: 'FAQ',
+      faq1Q: 'When would I want duplicates allowed?',
+      faq1A: "Useful for simulations where repeats are fine, like repeatedly rolling a die. Uncheck the box and each draw becomes fully independent.",
+      faq2Q: 'Is there a limit on how many numbers I can draw at once?',
+      faq2A: "Yes — up to 5,000 per draw, to keep the browser from freezing on an unreasonably large request.",
     }
   };
 
@@ -178,6 +212,18 @@
     document.getElementById('drawBtn').textContent = t().drawBtn;
     document.getElementById('copyBtn').textContent = t().copyBtn;
     document.getElementById('footerLinks').innerHTML = t().footerLinks;
+    document.getElementById('aboutTitle').textContent = t().aboutTitle;
+    document.getElementById('aboutBody1').textContent = t().aboutBody1;
+    document.getElementById('aboutBody2').textContent = t().aboutBody2;
+    document.getElementById('faqTitle').textContent = t().faqTitle;
+    document.getElementById('faq1Q').textContent = t().faq1Q;
+    document.getElementById('faq1A').textContent = t().faq1A;
+    document.getElementById('faq2Q').textContent = t().faq2Q;
+    document.getElementById('faq2A').textContent = t().faq2A;
+    document.getElementById('allToolsLink').textContent = lang === 'ja' ? '他のツール一覧' : 'All tools';
+    document.getElementById('allToolsLink').href = 'https://naginata-work.github.io/';
+    document.getElementById('privacyLink').textContent = lang === 'ja' ? 'プライバシーポリシー' : 'Privacy policy';
+    document.getElementById('privacyLink').href = 'https://naginata-work.github.io/privacy.html';
   }
 
   document.getElementById('langBtn').addEventListener('click', () => {
